@@ -1,0 +1,115 @@
+﻿@model PapeleriaCentral.Models.Ordene
+
+@{
+    ViewData["Title"] = "Eliminar Orden";
+}
+
+<div class="pagina-formulario">
+
+    <div class="encabezado-formulario">
+        <div>
+            <h1>Eliminar Orden</h1>
+            <p>Confirme si desea eliminar esta orden de compra.</p>
+        </div>
+
+        <a asp-controller="Ordenes"
+           asp-action="Index"
+           class="btn btn-volver">
+            Volver
+        </a>
+    </div>
+
+    <div class="tarjeta-formulario">
+
+        <div class="alerta-eliminar">
+            <h2>¿Está seguro de eliminar esta orden?</h2>
+            <p>
+                Esta acción eliminará permanentemente la orden
+                seleccionada.
+            </p>
+        </div>
+
+        <div class="detalle-eliminar">
+
+            <div class="detalle-item">
+                <span>Número de orden</span>
+                <strong>@Model.NumeroOrden</strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Cliente</span>
+                <strong>@Model.Cliente</strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Fecha de orden</span>
+                <strong>
+                    @Model.FechaOrden.ToString("dd/MM/yyyy")
+                </strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Tipo de cliente</span>
+                <strong>
+                    @Model.IdTipoClienteNavigation.Nombre
+                </strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Monto original</span>
+                <strong>
+                    Q @Model.MontoTotal.ToString("N2")
+                </strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Descuento</span>
+                <strong>
+                    @Model.DescuentoAplicado.ToString("N2")%
+                </strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Monto final</span>
+                <strong>
+                    Q @Model.MontoFinal.ToString("N2")
+                </strong>
+            </div>
+
+            <div class="detalle-item">
+                <span>Fecha de entrega</span>
+                <strong>
+                    @Model.FechaEntrega.ToString("dd/MM/yyyy")
+                </strong>
+            </div>
+
+        </div>
+
+        <form asp-controller="Ordenes"
+              asp-action="Eliminar"
+              asp-route-id="@Model.IdOrden"
+              method="post">
+
+            <input type="hidden"
+                   asp-for="IdOrden" />
+
+            <div class="botones-formulario">
+
+                <a asp-controller="Ordenes"
+                   asp-action="Index"
+                   class="btn btn-cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit"
+                        class="btn btn-eliminar">
+                    Eliminar Orden
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

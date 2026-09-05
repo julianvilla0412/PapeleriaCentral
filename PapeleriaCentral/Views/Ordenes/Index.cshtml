@@ -1,0 +1,199 @@
+﻿@model IEnumerable<PapeleriaCentral.Models.Ordene>
+
+@{
+    ViewData["Title"] = "Órdenes de Compra";
+}
+
+<div class="pagina-ordenes">
+
+    <div class="encabezado-pagina">
+        <div>
+            <h1>Órdenes de Compra</h1>
+            <p>Administración de órdenes de Papelería Central</p>
+        </div>
+
+        <a asp-controller="Ordenes"
+           asp-action="Crear"
+           class="btn btn-nuevo">
+            + Nueva Orden
+        </a>
+    </div>
+
+    @if (TempData["Mensaje"] != null)
+    {
+        <div class="mensaje-exito">
+            @TempData["Mensaje"]
+        </div>
+    }
+
+    <div class="panel-filtros">
+
+        <h2>Filtrar órdenes</h2>
+
+        <form asp-controller="Ordenes"
+              asp-action="Index"
+              method="get"
+              class="formulario-filtros">
+
+            <div class="campo">
+                <label>Tipo de cliente</label>
+
+                <select name="tipoCliente"
+                        asp-items="ViewBag.TiposCliente">
+
+                    <option value="">Todos</option>
+
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Fecha inicial</label>
+
+                <input type="date"
+                       name="fechaInicio"
+                       value="@(ViewBag.FechaInicio?.ToString("yyyy-MM-dd"))" />
+            </div>
+
+            <div class="campo">
+                <label>Fecha final</label>
+
+                <input type="date"
+                       name="fechaFin"
+                       value="@(ViewBag.FechaFin?.ToString("yyyy-MM-dd"))" />
+            </div>
+
+            <div class="acciones-filtro">
+
+                <button type="submit"
+                        class="btn btn-filtrar">
+                    Filtrar
+                </button>
+
+                <a asp-controller="Ordenes"
+                   asp-action="Index"
+                   class="btn btn-limpiar">
+                    Limpiar
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="contenedor-tabla">
+
+        <table class="tabla-ordenes">
+
+            <thead>
+                <tr>
+                    <th>N.º Orden</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Tipo</th>
+                    <th>Monto</th>
+                    <th>Descuento</th>
+                    <th>Total</th>
+                    <th>Pago</th>
+                    <th>Entrega</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model.Any())
+                {
+                    @foreach (var orden in Model)
+                    {
+                        string claseTipo =
+                            orden.IdTipoClienteNavigation.Nombre == "Mayorista"
+                            ? "tipo-mayorista"
+                            : orden.IdTipoClienteNavigation.Nombre == "Preferencial"
+                            ? "tipo-preferencial"
+                            : "tipo-regular";
+
+                        <tr>
+
+                            <td>
+                                <strong>@orden.NumeroOrden</strong>
+                            </td>
+
+                            <td>
+                                @orden.FechaOrden.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @orden.Cliente
+                            </td>
+
+                            <td>
+                                <span class="tipo-cliente @claseTipo">
+                                    @orden.IdTipoClienteNavigation.Nombre
+                                </span>
+                            </td>
+
+                            <td>
+                                Q @orden.MontoTotal.ToString("N2")
+                            </td>
+
+                            <td>
+                                @orden.DescuentoAplicado.ToString("N2")%
+                            </td>
+
+                            <td>
+                                <strong>
+                                    Q @orden.MontoFinal.ToString("N2")
+                                </strong>
+                            </td>
+
+                            <td>
+                                @orden.MetodoPago
+                            </td>
+
+                            <td>
+                                <span class="fecha-entrega">
+                                    @orden.FechaEntrega.ToString("dd/MM/yyyy")
+                                </span>
+                            </td>
+
+                            <td class="acciones">
+
+                                <a asp-controller="Ordenes"
+                                   asp-action="Editar"
+                                   asp-route-id="@orden.IdOrden"
+                                   class="btn-accion editar">
+                                    Editar
+                                </a>
+
+                                <a asp-controller="Ordenes"
+                                   asp-action="Eliminar"
+                                   asp-route-id="@orden.IdOrden"
+                                   class="btn-accion eliminar">
+                                    Eliminar
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10"
+                            class="sin-registros">
+
+                            No hay órdenes registradas.
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

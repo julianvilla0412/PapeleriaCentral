@@ -1,0 +1,204 @@
+﻿@model PapeleriaCentral.Models.Ordene
+
+@{
+    ViewData["Title"] = "Nueva Orden";
+}
+
+<div class="pagina-formulario">
+
+    <div class="encabezado-formulario">
+        <div>
+            <h1>Nueva Orden de Compra</h1>
+            <p>Ingrese la información de la orden.</p>
+        </div>
+
+        <a asp-controller="Ordenes"
+           asp-action="Index"
+           class="btn btn-volver">
+            Volver
+        </a>
+    </div>
+
+    <div class="tarjeta-formulario">
+
+        <form asp-controller="Ordenes"
+              asp-action="Crear"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="resumen-errores">
+            </div>
+
+            <div class="grid-formulario">
+
+                <div class="campo">
+                    <label asp-for="NumeroOrden">
+                        Número de orden
+                    </label>
+
+                    <input asp-for="NumeroOrden"
+                           placeholder="Ejemplo: ORD-001"
+                           maxlength="30"
+                           required />
+
+                    <span asp-validation-for="NumeroOrden"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo">
+                    <label asp-for="FechaOrden">
+                        Fecha de la orden
+                    </label>
+
+                    <input asp-for="FechaOrden"
+                           type="date"
+                           required />
+
+                    <span asp-validation-for="FechaOrden"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo campo-completo">
+                    <label asp-for="Cliente">
+                        Nombre del cliente
+                    </label>
+
+                    <input asp-for="Cliente"
+                           placeholder="Nombre del cliente"
+                           maxlength="100"
+                           required />
+
+                    <span asp-validation-for="Cliente"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo">
+                    <label asp-for="MontoTotal">
+                        Monto total
+                    </label>
+
+                    <div class="entrada-moneda">
+                        <span>Q</span>
+
+                        <input asp-for="MontoTotal"
+                               type="number"
+                               min="0.01"
+                               step="0.01"
+                               placeholder="0.00"
+                               required />
+                    </div>
+
+                    <span asp-validation-for="MontoTotal"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo">
+                    <label asp-for="MetodoPago">
+                        Método de pago
+                    </label>
+
+                    <select asp-for="MetodoPago" required>
+
+                        <option value="">
+                            Seleccione un método
+                        </option>
+
+                        <option value="Efectivo">
+                            Efectivo
+                        </option>
+
+                        <option value="Tarjeta">
+                            Tarjeta
+                        </option>
+
+                        <option value="Transferencia">
+                            Transferencia bancaria
+                        </option>
+
+                        <option value="Credito">
+                            Crédito
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="MetodoPago"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo campo-completo">
+
+                    <label asp-for="IdTipoCliente">
+                        Tipo de cliente
+                    </label>
+
+                    <select asp-for="IdTipoCliente"
+                            asp-items="ViewBag.TiposCliente"
+                            required>
+
+                        <option value="">
+                            Seleccione el tipo de cliente
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="IdTipoCliente"
+                          class="mensaje-error">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="informacion-clientes">
+
+                <h3>Condiciones por tipo de cliente</h3>
+
+                <div class="condiciones">
+
+                    <div class="condicion mayorista">
+                        <strong>Mayorista</strong>
+                        <span>10% de descuento</span>
+                        <span>Entrega: 48 horas</span>
+                    </div>
+
+                    <div class="condicion preferencial">
+                        <strong>Preferencial</strong>
+                        <span>5% de descuento</span>
+                        <span>Entrega: 72 horas</span>
+                    </div>
+
+                    <div class="condicion regular">
+                        <strong>Regular</strong>
+                        <span>Sin descuento</span>
+                        <span>Entrega: 5 días hábiles</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="botones-formulario">
+
+                <a asp-controller="Ordenes"
+                   asp-action="Index"
+                   class="btn btn-cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit"
+                        class="btn btn-guardar">
+                    Registrar Orden
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

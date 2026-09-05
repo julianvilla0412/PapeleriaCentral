@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Papelería Central
+    </title>
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <header class="barra-principal">
+
+        <div class="contenido-barra">
+
+            <a asp-controller="Ordenes"
+               asp-action="Index"
+               class="logo">
+
+                Papelería Central
+
+            </a>
+
+            <nav class="menu-principal">
+
+                <a asp-controller="Ordenes"
+                   asp-action="Index">
+                    Órdenes
+                </a>
+
+                <a asp-controller="Ordenes"
+                   asp-action="Crear">
+                    Nueva Orden
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="pie-pagina">
+
+        <div class="contenido-pie">
+
+            <strong>Papelería Central</strong>
+
+            <span>
+                Sistema de Gestión de Órdenes de Compra
+            </span>
+
+            <span>
+                &copy; 2026
+            </span>
+
+        </div>
+
+    </footer>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

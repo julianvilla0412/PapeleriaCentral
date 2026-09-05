@@ -1,0 +1,249 @@
+﻿@model PapeleriaCentral.Models.Ordene
+
+@{
+    ViewData["Title"] = "Editar Orden";
+}
+
+<div class="pagina-formulario">
+
+    <div class="encabezado-formulario">
+        <div>
+            <h1>Editar Orden</h1>
+            <p>Actualice la información de la orden de compra.</p>
+        </div>
+
+        <a asp-controller="Ordenes"
+           asp-action="Index"
+           class="btn btn-volver">
+            Volver
+        </a>
+    </div>
+
+    <div class="tarjeta-formulario">
+
+        <form asp-controller="Ordenes"
+              asp-action="Editar"
+              asp-route-id="@Model.IdOrden"
+              method="post">
+
+            <input type="hidden" asp-for="IdOrden" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="resumen-errores">
+            </div>
+
+            <div class="grid-formulario">
+
+                <div class="campo">
+                    <label asp-for="NumeroOrden">
+                        Número de orden
+                    </label>
+
+                    <input asp-for="NumeroOrden"
+                           maxlength="30"
+                           required />
+
+                    <span asp-validation-for="NumeroOrden"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo">
+                    <label asp-for="FechaOrden">
+                        Fecha de la orden
+                    </label>
+
+                    <input asp-for="FechaOrden"
+                           type="date"
+                           required />
+
+                    <span asp-validation-for="FechaOrden"
+                          class="mensaje-error">
+                    </span>
+                </div>
+
+                <div class="campo campo-completo">
+
+                    <label asp-for="Cliente">
+                        Nombre del cliente
+                    </label>
+
+                    <input asp-for="Cliente"
+                           maxlength="100"
+                           required />
+
+                    <span asp-validation-for="Cliente"
+                          class="mensaje-error">
+                    </span>
+
+                </div>
+
+                <div class="campo">
+
+                    <label asp-for="MontoTotal">
+                        Monto total
+                    </label>
+
+                    <div class="entrada-moneda">
+
+                        <span>Q</span>
+
+                        <input asp-for="MontoTotal"
+                               type="number"
+                               min="0.01"
+                               step="0.01"
+                               required />
+
+                    </div>
+
+                    <span asp-validation-for="MontoTotal"
+                          class="mensaje-error">
+                    </span>
+
+                </div>
+
+                <div class="campo">
+
+                    <label asp-for="MetodoPago">
+                        Método de pago
+                    </label>
+
+                    <select asp-for="MetodoPago" required>
+
+                        <option value="">
+                            Seleccione un método
+                        </option>
+
+                        <option value="Efectivo">
+                            Efectivo
+                        </option>
+
+                        <option value="Tarjeta">
+                            Tarjeta
+                        </option>
+
+                        <option value="Transferencia">
+                            Transferencia bancaria
+                        </option>
+
+                        <option value="Credito">
+                            Crédito
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="MetodoPago"
+                          class="mensaje-error">
+                    </span>
+
+                </div>
+
+                <div class="campo campo-completo">
+
+                    <label asp-for="IdTipoCliente">
+                        Tipo de cliente
+                    </label>
+
+                    <select asp-for="IdTipoCliente"
+                            asp-items="ViewBag.TiposCliente"
+                            required>
+
+                        <option value="">
+                            Seleccione el tipo de cliente
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="IdTipoCliente"
+                          class="mensaje-error">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="datos-calculados">
+
+                <h3>Información actual</h3>
+
+                <div class="resumen-orden">
+
+                    <div>
+                        <span>Descuento actual</span>
+                        <strong>
+                            @Model.DescuentoAplicado.ToString("N2")%
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Monto final actual</span>
+                        <strong>
+                            Q @Model.MontoFinal.ToString("N2")
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Fecha de entrega actual</span>
+                        <strong>
+                            @Model.FechaEntrega.ToString("dd/MM/yyyy")
+                        </strong>
+                    </div>
+
+                </div>
+
+                <p class="aviso-recalculo">
+                    Al guardar los cambios, el descuento, monto final
+                    y fecha de entrega se recalcularán automáticamente
+                    según el tipo de cliente seleccionado.
+                </p>
+
+            </div>
+
+            <div class="informacion-clientes">
+
+                <h3>Condiciones por tipo de cliente</h3>
+
+                <div class="condiciones">
+
+                    <div class="condicion mayorista">
+                        <strong>Mayorista</strong>
+                        <span>10% de descuento</span>
+                        <span>Entrega: 48 horas</span>
+                    </div>
+
+                    <div class="condicion preferencial">
+                        <strong>Preferencial</strong>
+                        <span>5% de descuento</span>
+                        <span>Entrega: 72 horas</span>
+                    </div>
+
+                    <div class="condicion regular">
+                        <strong>Regular</strong>
+                        <span>Sin descuento</span>
+                        <span>Entrega: 5 días hábiles</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="botones-formulario">
+
+                <a asp-controller="Ordenes"
+                   asp-action="Index"
+                   class="btn btn-cancelar">
+                    Cancelar
+                </a>
+
+                <button type="submit"
+                        class="btn btn-guardar">
+                    Guardar Cambios
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
